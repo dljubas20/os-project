@@ -2,12 +2,16 @@
 
 <PageTitle>os-project</PageTitle>
 
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
-    <main class="p-4">
+    <MudMainContent>
         @Body
-    </main>
+    </MudMainContent>
 </div>
