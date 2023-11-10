@@ -6,12 +6,10 @@
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <MudMainContent>
+<MudMainContent>
+    <NavMenu />
+    <MudContainer>
         @Body
-    </MudMainContent>
-</div>
+    </MudContainer>
+</MudMainContent>
