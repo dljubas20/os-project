@@ -73,8 +73,8 @@
         if (Model.Files == null) {
             Model.Files = new List<IBrowserFile>();
         }
+        Model.Files.Clear();
         Model.Files.Add(file);
-        //TODO upload the files to the server
     }
     private void OnValidSubmit(EditContext context)
     {
