@@ -2,14 +2,18 @@
 
 <PageTitle>os-project</PageTitle>
 
-<MudThemeProvider/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+<MudThemeProvider IsDarkMode="@IsDarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
 
 <MudMainContent>
-    <NavMenu />
+    <NavMenu @bind-IsDarkMode=IsDarkMode/>
     <MudContainer>
         @Body
     </MudContainer>
 </MudMainContent>
+
+@code {
+    public bool IsDarkMode = false;
+}

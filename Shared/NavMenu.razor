@@ -1,7 +1,7 @@
 ﻿<MudAppBar Color="Color.Primary" Elevation="1">
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
         <MudSpacer />
-    <MudIconButton Icon="@_themeIcon" Color="Color.Inherit" />
+    <MudIconButton Icon="@_themeIcon" Color="Color.Inherit" OnClick="@UpdateIsDarkMode" />
 </MudAppBar>
 
 <MudDrawer @bind-Open="@open" ClipMode="@DrawerClipMode.Never" PreserveOpenState="@preserveOpenState" Elevation="1" Variant="@DrawerVariant.Mini">
@@ -22,12 +22,27 @@
 </MudDrawer>
 
 @code {
-    private bool _isDarkMode;
-    private string _themeIcon = Icons.Material.Filled.WbSunny;
-    bool open = false;
-    bool preserveOpenState = false;
+    [Parameter]
+    public bool IsDarkMode { get; set; }
+    [Parameter]
+    public EventCallback<bool> IsDarkModeChanged { get; set; }
+    async Task UpdateIsDarkMode()
+    {
+        IsDarkMode = !IsDarkMode;
 
-    void ToggleDrawer()
+        if (IsDarkMode) {
+            _themeIcon = Icons.Material.Filled.DarkMode;
+        }
+        else {
+            _themeIcon = Icons.Material.Filled.LightMode;
+        }
+
+        await IsDarkModeChanged.InvokeAsync(IsDarkMode);
+    }
+    private string _themeIcon = Icons.Material.Filled.LightMode;
+    private bool open = false;
+    private bool preserveOpenState = false;
+    private void ToggleDrawer()
     {
         open = !open;
     }
