@@ -36,5 +36,23 @@ namespace os_project.Services
         {
             return Convert.ToBase64String(aes.IV);
         }
+
+        public void EncryptText(string text)
+        {
+            Directory.CreateDirectory("TextSteps");
+
+            File.WriteAllText("TextSteps/01_textToEncrypt.txt", text);
+            
+            using (CryptoStream cryptoStream = new(
+                File.Open("TextSteps/02_encryptedText.txt", FileMode.OpenOrCreate),
+                aes.CreateEncryptor(),
+                CryptoStreamMode.Write))
+            {
+                using (StreamWriter encryptWriter = new(cryptoStream))
+                {
+                    encryptWriter.Write(text);
+                }
+            }
+        }
     }
 }

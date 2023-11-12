@@ -56,6 +56,8 @@
     public TextEncryptInput Model { get; set; } = new TextEncryptInput();
     private void OnValidSubmit(EditContext context)
     {
+        EncryptionRepository.EncryptText(Model.Text);
+
         StateHasChanged();
         NavigationManager.NavigateTo("/");
     }

@@ -6,5 +6,6 @@ namespace os_project.Services
         byte[] GetIV();
         string GetKeyString();
         string GetIVString();
+        void EncryptText(string text);
     }
 }
