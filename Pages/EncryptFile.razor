@@ -1,5 +1,6 @@
 ﻿@page "/encrypt-file"
 @inject NavigationManager NavigationManager
+@inject IEncryptionRepository EncryptionRepository
 
 <h3>Encrypt a File</h3>
 
@@ -80,5 +81,9 @@
     {
         StateHasChanged();
         NavigationManager.NavigateTo("/");
+    }
+    protected override void OnInitialized()
+    {
+        
     }
 }

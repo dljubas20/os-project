@@ -1,5 +1,6 @@
 ﻿@page "/encrypt-text"
 @inject NavigationManager NavigationManager
+@inject IEncryptionRepository EncryptionRepository
 
 <h3>Encrypt Some Text</h3>
 
@@ -57,5 +58,9 @@
     {
         StateHasChanged();
         NavigationManager.NavigateTo("/");
+    }
+    protected override void OnInitialized()
+    {
+        
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Services;
+using os_project.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
+builder.Services.AddSingleton<IEncryptionRepository, EncryptionRepository>();
 
 var app = builder.Build();
 
