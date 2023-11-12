@@ -5,6 +5,9 @@
 
 .vscode
 
+# Generated Keys
+Keys
+
 # User-specific files
 *.rsuser
 *.suo
