@@ -5,15 +5,16 @@ namespace os_project.Services
     public class EncryptionRepository : IEncryptionRepository
     {
         private Aes aes;
+        private RSA rsa;
         public EncryptionRepository()
         {
             aes = Aes.Create();
+            rsa = RSA.Create();
 
             Directory.CreateDirectory("Keys");
-            using (StreamWriter streamWriter = new StreamWriter(Path.Combine("Keys", "tajni_kljuc.txt")))
-            {
-                streamWriter.Write(Convert.ToBase64String(aes.Key));
-            }
+            File.WriteAllText("Keys/tajni_kljuc.txt", Convert.ToBase64String(aes.Key));
+            File.WriteAllText("Keys/javni_kljuc.txt", Convert.ToBase64String(rsa.ExportRSAPublicKey()));
+            File.WriteAllText("Keys/privatni_kljuc.txt", Convert.ToBase64String(rsa.ExportRSAPrivateKey()));
         }
 
         public byte[] GetKey()
