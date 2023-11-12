@@ -1,4 +1,4 @@
-﻿@page "/encrypt-file"
+@page "/encrypt-file"
 @inject NavigationManager NavigationManager
 @inject IEncryptionRepository EncryptionRepository
 
@@ -84,6 +84,6 @@
     }
     protected override void OnInitialized()
     {
-        
+        Model.Key = EncryptionRepository.GetKeyString();
     }
 }
