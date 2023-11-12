@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using System.Text;
 
 namespace os_project.Services
 {
@@ -13,7 +12,7 @@ namespace os_project.Services
             Directory.CreateDirectory("Keys");
             using (StreamWriter streamWriter = new StreamWriter(Path.Combine("Keys", "tajni_kljuc.txt")))
             {
-                streamWriter.Write(Encoding.UTF8.GetString(aes.Key));
+                streamWriter.Write(Convert.ToBase64String(aes.Key));
             }
         }
 
