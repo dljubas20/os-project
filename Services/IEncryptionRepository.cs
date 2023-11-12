@@ -7,5 +7,6 @@ namespace os_project.Services
         string GetKeyString();
         string GetIVString();
         void EncryptText(string text);
+        void DecryptText();
     }
 }

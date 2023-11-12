@@ -54,5 +54,22 @@ namespace os_project.Services
                 }
             }
         }
+
+        public void DecryptText()
+        {
+            Directory.CreateDirectory("TextSteps");
+            
+            using (CryptoStream cryptoStream = new(
+                File.Open("TextSteps/02_encryptedText.txt", FileMode.Open),
+                aes.CreateDecryptor(),
+                CryptoStreamMode.Read))
+            {
+                using (StreamReader decryptReader = new(cryptoStream))
+                {
+                    string originalText = decryptReader.ReadToEnd();
+                    File.WriteAllText("TextSteps/03_decryptedText.txt", originalText);
+                }
+            }
+        }
     }
 }
