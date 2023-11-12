@@ -4,5 +4,7 @@ namespace os_project.Services
     {
         byte[] GetKey();
         byte[] GetIV();
+        string GetKeyString();
+        string GetIVString();
     }
 }

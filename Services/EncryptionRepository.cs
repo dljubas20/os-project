@@ -26,5 +26,15 @@ namespace os_project.Services
         {
             return aes.IV;
         }
+
+        public string GetKeyString()
+        {
+            return Convert.ToBase64String(aes.Key);
+        }
+
+        public string GetIVString()
+        {
+            return Convert.ToBase64String(aes.IV);
+        }
     }
 }
