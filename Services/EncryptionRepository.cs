@@ -43,8 +43,9 @@ namespace os_project.Services
 
             File.WriteAllText("TextSteps/01_textToEncrypt.txt", text);
             
+            using FileStream fileStream = File.Open("TextSteps/02_encryptedText.txt", FileMode.OpenOrCreate);
             using (CryptoStream cryptoStream = new(
-                File.Open("TextSteps/02_encryptedText.txt", FileMode.OpenOrCreate),
+                fileStream,
                 aes.CreateEncryptor(),
                 CryptoStreamMode.Write))
             {
@@ -59,8 +60,9 @@ namespace os_project.Services
         {
             Directory.CreateDirectory("TextSteps");
             
+            using FileStream fileStream = File.Open("TextSteps/02_encryptedText.txt", FileMode.Open);
             using (CryptoStream cryptoStream = new(
-                File.Open("TextSteps/02_encryptedText.txt", FileMode.Open),
+                fileStream,
                 aes.CreateDecryptor(),
                 CryptoStreamMode.Read))
             {
