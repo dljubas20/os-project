@@ -6,8 +6,8 @@ namespace os_project.Services
         byte[] GetIV();
         string GetKeyString();
         string GetIVString();
-        void EncryptText(string text);
-        void DecryptText();
+        void SymmetricEncryptText(string text);
+        void SymmetricDecryptText();
         void HashText();
     }
 }

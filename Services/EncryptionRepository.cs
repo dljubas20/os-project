@@ -39,7 +39,7 @@ namespace os_project.Services
             return Convert.ToBase64String(aes.IV);
         }
 
-        public void EncryptText(string text)
+        public void SymmetricEncryptText(string text)
         {
             Directory.CreateDirectory("TextSteps");
 
@@ -58,7 +58,7 @@ namespace os_project.Services
             }
         }
 
-        public void DecryptText()
+        public void SymmetricDecryptText()
         {
             Directory.CreateDirectory("TextSteps");
             

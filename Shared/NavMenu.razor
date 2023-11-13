@@ -1,4 +1,4 @@
-﻿<MudAppBar Color="Color.Primary" Elevation="1">
+<MudAppBar Color="Color.Primary" Elevation="1">
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
         <MudSpacer />
     <MudIconButton Icon="@_themeIcon" Color="Color.Inherit" OnClick="@UpdateIsDarkMode" />
@@ -9,10 +9,10 @@
         <MudNavLink Href="/" Icon="@Icons.Material.Filled.Home">
             Home
         </MudNavLink>
-        <MudNavLink Href="/encrypt-text" Icon="@Icons.Material.Filled.TextFormat">
+        <MudNavLink Href="/symmetric-encrypt-text" Icon="@Icons.Material.Filled.TextFormat">
             Symmetric Encrypt-Text
         </MudNavLink>
-        <MudNavLink Href="/encrypt-file" Icon="@Icons.Material.Filled.UploadFile">
+        <MudNavLink Href="/symmetric-encrypt-file" Icon="@Icons.Material.Filled.UploadFile">
             Symmetric Encrypt-File
         </MudNavLink>
     </MudNavMenu>

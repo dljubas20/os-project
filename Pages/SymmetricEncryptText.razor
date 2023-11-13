@@ -1,4 +1,4 @@
-﻿@page "/encrypt-text"
+﻿@page "/symmetric-encrypt-text"
 @inject NavigationManager NavigationManager
 @inject IEncryptionRepository EncryptionRepository
 
@@ -56,8 +56,8 @@
     public TextEncryptInput Model { get; set; } = new TextEncryptInput();
     private void OnValidSubmit(EditContext context)
     {
-        EncryptionRepository.EncryptText(Model.Text);
-        EncryptionRepository.DecryptText();
+        EncryptionRepository.SymmetricEncryptText(Model.Text);
+        EncryptionRepository.SymmetricDecryptText();
         EncryptionRepository.HashText();
 
         StateHasChanged();
