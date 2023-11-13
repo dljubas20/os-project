@@ -6,10 +6,12 @@ namespace os_project.Services
     {
         private Aes aes;
         private RSA rsa;
+        private HashAlgorithm hasher;
         public EncryptionRepository()
         {
             aes = Aes.Create();
             rsa = RSA.Create();
+            hasher = SHA256.Create();
 
             Directory.CreateDirectory("Keys");
             File.WriteAllText("Keys/tajni_kljuc.txt", Convert.ToBase64String(aes.Key));
@@ -72,6 +74,17 @@ namespace os_project.Services
                     File.WriteAllText("TextSteps/03_decryptedText.txt", originalText);
                 }
             }
+        }
+
+        public void HashText()
+        {
+            Directory.CreateDirectory("TextSteps");
+
+            using FileStream fileStream = File.Open("TextSteps/01_textToEncrypt.txt", FileMode.Open);
+
+            byte[] hash = hasher.ComputeHash(fileStream);
+
+            File.WriteAllText("TextSteps/04_textHash.txt", Convert.ToBase64String(hash));
         }
     }
 }

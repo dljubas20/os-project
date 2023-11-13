@@ -8,5 +8,6 @@ namespace os_project.Services
         string GetIVString();
         void EncryptText(string text);
         void DecryptText();
+        void HashText();
     }
 }

@@ -57,6 +57,8 @@
     private void OnValidSubmit(EditContext context)
     {
         EncryptionRepository.EncryptText(Model.Text);
+        EncryptionRepository.DecryptText();
+        EncryptionRepository.HashText();
 
         StateHasChanged();
         NavigationManager.NavigateTo("/");
