@@ -41,11 +41,11 @@ namespace os_project.Services
 
         public void SymmetricEncryptText(string text)
         {
-            Directory.CreateDirectory("TextSteps");
+            Directory.CreateDirectory("SymmetricTextSteps");
 
-            File.WriteAllText("TextSteps/01_textToEncrypt.txt", text);
+            File.WriteAllText("SymmetricTextSteps/01_textToEncrypt.txt", text);
             
-            using FileStream fileStream = File.Open("TextSteps/02_encryptedText.txt", FileMode.OpenOrCreate);
+            using FileStream fileStream = File.Open("SymmetricTextSteps/02_encryptedText.txt", FileMode.OpenOrCreate);
             using (CryptoStream cryptoStream = new(
                 fileStream,
                 aes.CreateEncryptor(),
@@ -60,9 +60,9 @@ namespace os_project.Services
 
         public void SymmetricDecryptText()
         {
-            Directory.CreateDirectory("TextSteps");
+            Directory.CreateDirectory("SymmetricTextSteps");
             
-            using FileStream fileStream = File.Open("TextSteps/02_encryptedText.txt", FileMode.Open);
+            using FileStream fileStream = File.Open("SymmetricTextSteps/02_encryptedText.txt", FileMode.Open);
             using (CryptoStream cryptoStream = new(
                 fileStream,
                 aes.CreateDecryptor(),
@@ -71,20 +71,20 @@ namespace os_project.Services
                 using (StreamReader decryptReader = new(cryptoStream))
                 {
                     string originalText = decryptReader.ReadToEnd();
-                    File.WriteAllText("TextSteps/03_decryptedText.txt", originalText);
+                    File.WriteAllText("SymmetricTextSteps/03_decryptedText.txt", originalText);
                 }
             }
         }
 
         public void HashText()
         {
-            Directory.CreateDirectory("TextSteps");
+            Directory.CreateDirectory("SymmetricTextSteps");
 
-            using FileStream fileStream = File.Open("TextSteps/01_textToEncrypt.txt", FileMode.Open);
+            using FileStream fileStream = File.Open("SymmetricTextSteps/01_textToEncrypt.txt", FileMode.Open);
 
             byte[] hash = hasher.ComputeHash(fileStream);
 
-            File.WriteAllText("TextSteps/04_textHash.txt", Convert.ToBase64String(hash));
+            File.WriteAllText("SymmetricTextSteps/04_textHash.txt", Convert.ToBase64String(hash));
         }
     }
 }

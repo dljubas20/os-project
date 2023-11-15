@@ -9,7 +9,8 @@
 Keys
 
 # Steps
-TextSteps
+SymmetricTextSteps
+AsymmetricTextSteps
 
 # User-specific files
 *.rsuser
