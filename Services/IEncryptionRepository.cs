@@ -8,6 +8,7 @@ namespace os_project.Services
         string GetIVString();
         void SymmetricEncryptText(string text);
         void SymmetricDecryptText();
+        void AsymmetricEncryptText(string text);
         void HashText();
     }
 }

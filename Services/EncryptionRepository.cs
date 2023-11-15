@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using System.Text;
 
 namespace os_project.Services
 {
@@ -74,6 +75,18 @@ namespace os_project.Services
                     File.WriteAllText("SymmetricTextSteps/03_decryptedText.txt", originalText);
                 }
             }
+        }
+
+        public void AsymmetricEncryptText(string text)
+        {
+            Directory.CreateDirectory("AsymmetricTextSteps");
+
+            File.WriteAllText("AsymmetricTextSteps/01_textToEncrypt.txt", text);
+            
+            byte[] encryptedBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(text), RSAEncryptionPadding.Pkcs1);
+            string encryptedText = Convert.ToBase64String(encryptedBytes);
+
+            File.WriteAllText("AsymmetricTextSteps/02_encryptedText.txt", encryptedText);
         }
 
         public void HashText()
