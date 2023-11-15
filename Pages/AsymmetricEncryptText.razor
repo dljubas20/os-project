@@ -44,6 +44,8 @@
     public TextEncryptInput Model { get; set; } = new TextEncryptInput();
     private void OnValidSubmit(EditContext context)
     {
+        EncryptionRepository.AsymmetricEncryptText(Model.Text);
+        EncryptionRepository.AsymmetricDecryptText();
         StateHasChanged();
         NavigationManager.NavigateTo("/");
     }

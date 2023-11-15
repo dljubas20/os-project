@@ -89,6 +89,16 @@ namespace os_project.Services
             File.WriteAllText("AsymmetricTextSteps/02_encryptedText.txt", encryptedText);
         }
 
+        public void AsymmetricDecryptText()
+        {
+            Directory.CreateDirectory("AsymmetricTextSteps");
+
+            string encryptedText = File.ReadAllText("AsymmetricTextSteps/02_encryptedText.txt");
+            byte[] decryptedBytes = rsa.Decrypt(Convert.FromBase64String(encryptedText), RSAEncryptionPadding.Pkcs1);
+
+            File.WriteAllText("AsymmetricTextSteps/03_decryptedText.txt", Encoding.UTF8.GetString(decryptedBytes));
+        }
+
         public void HashText()
         {
             Directory.CreateDirectory("SymmetricTextSteps");

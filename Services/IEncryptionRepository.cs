@@ -9,6 +9,7 @@ namespace os_project.Services
         void SymmetricEncryptText(string text);
         void SymmetricDecryptText();
         void AsymmetricEncryptText(string text);
+        void AsymmetricDecryptText();
         void HashText();
     }
 }
