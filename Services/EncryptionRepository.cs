@@ -118,6 +118,39 @@ namespace os_project.Services
             }
         }
 
+        public async Task AsymmetricEncryptFile(IBrowserFile file)
+        {
+            Directory.CreateDirectory("AsymmetricFileSteps");
+
+            using FileStream fileStreamOriginal = File.Open("AsymmetricFileSteps/" + file.Name, FileMode.OpenOrCreate);
+            await file.OpenReadStream().CopyToAsync(fileStreamOriginal);
+
+            using (FileStream fileStreamSave = File.Open("AsymmetricFileSteps/01_fileToEncrypt", FileMode.OpenOrCreate))
+            {
+                await file.OpenReadStream().CopyToAsync(fileStreamSave);
+            }
+
+            using (MemoryStream ms = new())
+            {
+                using FileStream fileStreamSave = File.Open("AsymmetricFileSteps/01_fileToEncrypt", FileMode.Open);
+                
+                fileStreamSave.CopyTo(ms);
+                
+                byte[] encryptedBytes = rsa.Encrypt(ms.ToArray(), RSAEncryptionPadding.Pkcs1);
+                File.WriteAllBytes("AsymmetricFileSteps/02_encryptedFile", encryptedBytes);
+            }
+        }
+
+        public void AsymmetricDecryptFile()
+        {
+            Directory.CreateDirectory("AsymmetricFileSteps");
+            
+            byte[] encryptedBytes = File.ReadAllBytes("AsymmetricFileSteps/02_encryptedFile");
+            byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, RSAEncryptionPadding.Pkcs1);
+
+            File.WriteAllBytes("AsymmetricFileSteps/03_decryptedFile", decryptedBytes);
+        }
+
         public void AsymmetricEncryptText(string text)
         {
             Directory.CreateDirectory("AsymmetricTextSteps");
