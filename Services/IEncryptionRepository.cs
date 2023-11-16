@@ -17,5 +17,6 @@ namespace os_project.Services
         Task AsymmetricEncryptFile(IBrowserFile file);
         void AsymmetricDecryptFile();
         void HashText();
+        void HashFile();
     }
 }

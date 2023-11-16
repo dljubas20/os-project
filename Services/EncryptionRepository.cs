@@ -183,5 +183,16 @@ namespace os_project.Services
 
             File.WriteAllText("SymmetricTextSteps/04_textHash.txt", Convert.ToBase64String(hash));
         }
+
+        public void HashFile()
+        {
+            Directory.CreateDirectory("SymmetricFileSteps");
+
+            using FileStream fileStream = File.Open("SymmetricFileSteps/01_fileToEncrypt", FileMode.Open);
+
+            byte[] hash = hasher.ComputeHash(fileStream);
+
+            File.WriteAllText("SymmetricFileSteps/04_fileHash", Convert.ToBase64String(hash));
+        }
     }
 }
