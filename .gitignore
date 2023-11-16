@@ -12,6 +12,7 @@ Keys
 SymmetricTextSteps
 AsymmetricTextSteps
 SymmetricFileSteps
+AsymmetricFileSteps
 
 # User-specific files
 *.rsuser
