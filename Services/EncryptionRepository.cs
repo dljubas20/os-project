@@ -194,5 +194,17 @@ namespace os_project.Services
 
             File.WriteAllText("SymmetricFileSteps/04_fileHash", Convert.ToBase64String(hash));
         }
+
+        public void SignFile()
+        {
+            RSAPKCS1SignatureFormatter rsaFormatter = new(rsa);
+            rsaFormatter.SetHashAlgorithm(nameof(SHA256));
+
+            byte[] hash = Convert.FromBase64String(File.ReadAllText("SymmetricFileSteps/04_fileHash"));
+
+            byte[] signedHash = rsaFormatter.CreateSignature(hash);
+
+            File.WriteAllText("SymmetricFileSteps/05_fileSignature", Convert.ToBase64String(signedHash));
+        }
     }
 }

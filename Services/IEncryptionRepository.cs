@@ -18,5 +18,6 @@ namespace os_project.Services
         void AsymmetricDecryptFile();
         void HashText();
         void HashFile();
+        void SignFile();
     }
 }
