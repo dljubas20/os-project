@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace os_project.Services
 {
@@ -74,6 +75,46 @@ namespace os_project.Services
                     string originalText = decryptReader.ReadToEnd();
                     File.WriteAllText("SymmetricTextSteps/03_decryptedText.txt", originalText);
                 }
+            }
+        }
+
+        public async Task SymmetricEncryptFile(IBrowserFile file)
+        {
+            Directory.CreateDirectory("SymmetricFileSteps");
+
+            using FileStream fileStreamOriginal = File.Open("SymmetricFileSteps/" + file.Name, FileMode.OpenOrCreate);
+            await file.OpenReadStream().CopyToAsync(fileStreamOriginal);
+
+            using (FileStream fileStreamSave = File.Open("SymmetricFileSteps/01_fileToEncrypt", FileMode.OpenOrCreate))
+            {
+                await file.OpenReadStream().CopyToAsync(fileStreamSave);
+            }
+
+            using FileStream fileStreamEncrypt = File.Open("SymmetricFileSteps/02_encryptedFile", FileMode.OpenOrCreate);
+
+            using (CryptoStream cryptoStream = new(
+                fileStreamEncrypt,
+                aes.CreateEncryptor(),
+                CryptoStreamMode.Write))
+            {
+                using FileStream fileStreamSave = File.Open("SymmetricFileSteps/01_fileToEncrypt", FileMode.Open);
+                fileStreamSave.CopyTo(cryptoStream);
+            }
+        }
+
+        public void SymmetricDecryptFile()
+        {
+            Directory.CreateDirectory("SymmetricFileSteps");
+            
+            using FileStream fileStreamEncrypted = File.Open("SymmetricFileSteps/02_encryptedFile", FileMode.Open);
+            using FileStream fileStreamDecrypt = File.Open("SymmetricFileSteps/03_decryptedFile", FileMode.OpenOrCreate);
+            
+            using (CryptoStream cryptoStream = new(
+                fileStreamDecrypt,
+                aes.CreateDecryptor(),
+                CryptoStreamMode.Write))
+            {
+                fileStreamEncrypted.CopyTo(cryptoStream);
             }
         }
 
