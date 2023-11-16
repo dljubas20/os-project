@@ -1,18 +1,52 @@
-﻿<MatNavMenu Style="color: white;">
-    <MatNavItem Href="/">
-        <MatIcon Icon="home"/>&nbsp;&nbsp;Home
-    </MatNavItem>
-    <MatNavItem Href="/counter">
-        <MatIcon Icon="plus_one"/>&nbsp;&nbsp;Counter
-    </MatNavItem>
-    <MatNavItem Href="/encrypt-text">
-        <MatIcon Icon="text_fields"/>&nbsp;&nbsp;Encrypt-Text
-    </MatNavItem>
-    <MatNavItem Href="/encrypt-file">
-        <MatIcon Icon="insert_drive_file"/>&nbsp;&nbsp;Encrypt-File
-    </MatNavItem>
-</MatNavMenu>
+﻿<MudAppBar Color="Color.Primary" Elevation="1">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+        <MudSpacer />
+    <MudIconButton Icon="@_themeIcon" Color="Color.Inherit" OnClick="@UpdateIsDarkMode" />
+</MudAppBar>
+
+<MudDrawer @bind-Open="@open" ClipMode="@DrawerClipMode.Never" PreserveOpenState="@preserveOpenState" Elevation="1" Variant="@DrawerVariant.Mini">
+    <MudNavMenu Class="mud-width-full">
+        <MudNavLink Href="/" Icon="@Icons.Material.Filled.Home">
+            Home
+        </MudNavLink>
+        <MudNavLink Href="/symmetric-encrypt-text" Icon="@Icons.Material.Filled.TextFormat">
+            Symmetric Encrypt-Text
+        </MudNavLink>
+        <MudNavLink Href="/symmetric-encrypt-file" Icon="@Icons.Material.Filled.UploadFile">
+            Symmetric Encrypt-File
+        </MudNavLink>
+        <MudNavLink Href="/asymmetric-encrypt-text" Icon="@Icons.Material.Filled.TextFormat">
+            Asymmetric Encrypt-Text
+        </MudNavLink>
+        <MudNavLink Href="/asymmetric-encrypt-file" Icon="@Icons.Material.Filled.UploadFile">
+            Asymmetric Encrypt-File
+        </MudNavLink>
+    </MudNavMenu>
+</MudDrawer>
 
 @code {
-    
+    [Parameter]
+    public bool IsDarkMode { get; set; }
+    [Parameter]
+    public EventCallback<bool> IsDarkModeChanged { get; set; }
+    async Task UpdateIsDarkMode()
+    {
+        IsDarkMode = !IsDarkMode;
+
+        if (IsDarkMode) {
+            _themeIcon = Icons.Material.Filled.DarkMode;
+        }
+        else {
+            _themeIcon = Icons.Material.Filled.LightMode;
+        }
+
+        await IsDarkModeChanged.InvokeAsync(IsDarkMode);
+    }
+    private string _themeIcon = Icons.Material.Filled.LightMode;
+    private bool open = true;
+    private bool preserveOpenState = false;
+    private void ToggleDrawer()
+    {
+        open = !open;
+    }
 }

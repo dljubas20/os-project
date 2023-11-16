@@ -5,6 +5,15 @@
 
 .vscode
 
+# Generated Keys
+Keys
+
+# Steps
+SymmetricTextSteps
+AsymmetricTextSteps
+SymmetricFileSteps
+AsymmetricFileSteps
+
 # User-specific files
 *.rsuser
 *.suo

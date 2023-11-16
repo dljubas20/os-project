@@ -1,0 +1,56 @@
+﻿@page "/asymmetric-encrypt-text"
+@inject NavigationManager NavigationManager
+@inject IEncryptionRepository EncryptionRepository
+
+<h3>Asymmetric Text Encryptinator</h3>
+
+<EditForm
+    Model="@Model"
+    OnValidSubmit="@OnValidSubmit"
+    style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    "
+>
+    <DataAnnotationsValidator />
+    <MudTextField
+        @bind-Value="@Model.Text"
+        For="@(() => Model.Text)"
+        Label="Text"
+        Variant="@Variant.Outlined"
+        Required
+        FullWidth
+        Margin="Margin.Normal"
+        Lines="5"
+    />
+
+    <MudButton
+        Variant="Variant.Filled"
+        ButtonType="ButtonType.Submit"
+        Color="Color.Primary"
+        Style="width: fit-content; margin: 2vh;"
+    >
+        Submit
+    </MudButton>
+</EditForm>
+
+@code {
+    public class TextEncryptInput
+    {
+        [Required]
+        public string? Text { get; set; }
+    }
+    public TextEncryptInput Model { get; set; } = new TextEncryptInput();
+    private void OnValidSubmit(EditContext context)
+    {
+        EncryptionRepository.AsymmetricEncryptText(Model.Text);
+        EncryptionRepository.AsymmetricDecryptText();
+        StateHasChanged();
+        NavigationManager.NavigateTo("/");
+    }
+    protected override void OnInitialized()
+    {
+        
+    }
+}
