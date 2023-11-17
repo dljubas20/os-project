@@ -21,7 +21,7 @@
                     Color="Color.Primary"
                     StartIcon="@Icons.Material.Filled.CloudUpload"
                     for="@buttonContext">
-                Upload Files
+                Choose File
             </MudButton>
             <ValidationMessage For="() => Model.Files" />
         </ButtonTemplate>
@@ -50,17 +50,69 @@
         Margin="Margin.Normal"
     />
 
-    <MudButton
-        Variant="Variant.Filled"
-        ButtonType="ButtonType.Submit"
-        Color="Color.Primary"
-        Style="width: fit-content; margin: 2vh;"
-    >
-        Submit
-    </MudButton>
+    <MudContainer>
+        <MudButton
+            Variant="Variant.Filled"
+            ButtonType="ButtonType.Submit"
+            Color="Color.Primary"
+            Style="width: fit-content; margin: 2vh;"
+            Disabled="@isEncryptDisabled"
+        >
+            Upload and Encrypt
+        </MudButton>
+
+        <MudButton
+            Variant="Variant.Filled"
+            ButtonType="ButtonType.Button"
+            Color="Color.Primary"
+            Style="width: fit-content; margin: 2vh;"
+            OnClick="@Decrypt"
+            Disabled="@isDecryptDisabled"
+        >
+            Decrypt
+        </MudButton>
+
+        <MudButton
+            Variant="Variant.Filled"
+            ButtonType="ButtonType.Button"
+            Color="Color.Primary"
+            Style="width: fit-content; margin: 2vh;"
+            OnClick="@GenerateHash"
+            Disabled="@isGenerateHashDisabled"
+        >
+            Generate Hash
+        </MudButton>
+
+        <MudButton
+            Variant="Variant.Filled"
+            ButtonType="ButtonType.Button"
+            Color="Color.Primary"
+            Style="width: fit-content; margin: 2vh;"
+            OnClick="@GenerateSignature"
+            Disabled="@isSignDisabled"
+        >
+            Generate Signature
+        </MudButton>
+
+        <MudButton
+            Variant="Variant.Filled"
+            ButtonType="ButtonType.Button"
+            Color="Color.Primary"
+            Style="width: fit-content; margin: 2vh;"
+            OnClick="@VerifySignature"
+            Disabled="@isVerifySignatureDisabled"
+        >
+            Verify Signature
+        </MudButton>
+    </MudContainer>
 </EditForm>
 
 @code {
+    private bool isEncryptDisabled = false;
+    private bool isDecryptDisabled = true;
+    private bool isGenerateHashDisabled = true;
+    private bool isSignDisabled = true;
+    private bool isVerifySignatureDisabled = true;
     public class FileEncryptInput
     {
         [Required]
@@ -77,10 +129,48 @@
         Model.Files.Clear();
         Model.Files.Add(file);
     }
-    private void OnValidSubmit(EditContext context)
+    private async Task OnValidSubmit(EditContext context)
     {
+        await EncryptionRepository.SymmetricEncryptFile(Model.Files.First());
         StateHasChanged();
-        NavigationManager.NavigateTo("/");
+
+        isEncryptDisabled = true;
+        isDecryptDisabled = false;
+    }
+
+    private void Decrypt()
+    {
+        EncryptionRepository.SymmetricDecryptFile();
+
+        isDecryptDisabled = true;
+        isGenerateHashDisabled = false;
+    }
+
+    private void GenerateHash()
+    {
+        EncryptionRepository.HashFile();
+
+        isGenerateHashDisabled = true;
+        isSignDisabled = false;
+    }
+
+    private void GenerateSignature()
+    {
+        EncryptionRepository.SignFile();
+
+        isSignDisabled = true;
+        isVerifySignatureDisabled = false;
+    }
+
+    private void VerifySignature()
+    {
+        if (EncryptionRepository.VerifyFileSignature()) {
+            isVerifySignatureDisabled = true;
+            isEncryptDisabled = false;
+
+            NavigationManager.NavigateTo("/");
+        }
+
     }
     protected override void OnInitialized()
     {

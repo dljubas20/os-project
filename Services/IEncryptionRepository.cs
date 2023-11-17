@@ -19,6 +19,6 @@ namespace os_project.Services
         void HashText();
         void HashFile();
         void SignFile();
-        void VerifyFileSignature();
+        bool VerifyFileSignature();
     }
 }

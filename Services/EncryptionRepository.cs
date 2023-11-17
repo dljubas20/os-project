@@ -207,20 +207,27 @@ namespace os_project.Services
             File.WriteAllText("SymmetricFileSteps/05_fileSignature", Convert.ToBase64String(signedHash));
         }
 
-        public void VerifyFileSignature()
+        public bool VerifyFileSignature()
         {
             RSAPKCS1SignatureDeformatter rsaDeformatter = new(rsa);
             rsaDeformatter.SetHashAlgorithm(nameof(SHA256));
 
-            byte[] hash = Convert.FromBase64String(File.ReadAllText("SymmetricFileSteps/04_fileHash"));
-
-            byte[] signedHash = Convert.FromBase64String(File.ReadAllText("SymmetricFileSteps/05_fileSignature"));
-
-            if(rsaDeformatter.VerifySignature(hash, signedHash))
+            try
             {
-                Console.WriteLine("Digital signature verification works.");
-            } else {
-                Console.WriteLine("Digital signature verification failed.");
+                byte[] hash = Convert.FromBase64String(File.ReadAllText("SymmetricFileSteps/04_fileHash"));
+
+                byte[] signedHash = Convert.FromBase64String(File.ReadAllText("SymmetricFileSteps/05_fileSignature"));
+
+                if(rsaDeformatter.VerifySignature(hash, signedHash))
+                {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }
