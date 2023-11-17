@@ -4,10 +4,7 @@ namespace os_project.Services
 {
     public interface IEncryptionRepository
     {
-        byte[] GetKey();
-        byte[] GetIV();
         string GetKeyString();
-        string GetIVString();
         void SymmetricEncryptText(string text);
         void SymmetricDecryptText();
         Task SymmetricEncryptFile(IBrowserFile file);
@@ -16,7 +13,13 @@ namespace os_project.Services
         void AsymmetricDecryptText();
         Task AsymmetricEncryptFile(IBrowserFile file);
         void AsymmetricDecryptFile();
-        void HashText();
-        void HashFile();
+        void SymmetricHashText();
+        void AsymmetricHashText();
+        void SymmetricHashFile();
+        void AsymmetricHashFile();
+        void SymmetricSignFile();
+        void AsymmetricSignFile();
+        bool SymmetricVerifyFileSignature();
+        bool AsymmetricVerifyFileSignature();
     }
 }

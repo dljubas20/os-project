@@ -58,7 +58,7 @@
     {
         EncryptionRepository.SymmetricEncryptText(Model.Text);
         EncryptionRepository.SymmetricDecryptText();
-        EncryptionRepository.HashText();
+        EncryptionRepository.SymmetricHashText();
 
         StateHasChanged();
         NavigationManager.NavigateTo("/");
