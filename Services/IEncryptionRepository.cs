@@ -4,6 +4,7 @@ namespace os_project.Services
 {
     public interface IEncryptionRepository
     {
+        string GetKeyString();
         void SymmetricEncryptText(string text);
         void SymmetricDecryptText();
         Task SymmetricEncryptFile(IBrowserFile file);

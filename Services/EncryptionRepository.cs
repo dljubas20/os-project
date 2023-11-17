@@ -21,6 +21,11 @@ namespace os_project.Services
             File.WriteAllText("Keys/privatni_kljuc.txt", Convert.ToBase64String(rsa.ExportRSAPrivateKey()));
         }
 
+        public string GetKeyString()
+        {
+            return File.ReadAllText("Keys/tajni_kljuc.txt");
+        }
+
         public void SymmetricEncryptText(string text)
         {
             Directory.CreateDirectory("SymmetricTextSteps");
