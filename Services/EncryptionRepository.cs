@@ -173,7 +173,7 @@ namespace os_project.Services
             File.WriteAllText("AsymmetricTextSteps/03_decryptedText.txt", Encoding.UTF8.GetString(decryptedBytes));
         }
 
-        public void HashText()
+        public void SymmetricHashText()
         {
             Directory.CreateDirectory("SymmetricTextSteps");
 
@@ -184,7 +184,18 @@ namespace os_project.Services
             File.WriteAllText("SymmetricTextSteps/04_textHash.txt", Convert.ToBase64String(hash));
         }
 
-        public void HashFile()
+        public void AsymmetricHashText()
+        {
+            Directory.CreateDirectory("AsymmetricTextSteps");
+
+            using FileStream fileStream = File.Open("AsymmetricTextSteps/01_textToEncrypt.txt", FileMode.Open);
+
+            byte[] hash = hasher.ComputeHash(fileStream);
+
+            File.WriteAllText("AsymmetricTextSteps/04_textHash.txt", Convert.ToBase64String(hash));
+        }
+
+        public void SymmetricHashFile()
         {
             Directory.CreateDirectory("SymmetricFileSteps");
 
@@ -195,7 +206,18 @@ namespace os_project.Services
             File.WriteAllText("SymmetricFileSteps/04_fileHash", Convert.ToBase64String(hash));
         }
 
-        public void SignFile()
+        public void AsymmetricHashFile()
+        {
+            Directory.CreateDirectory("AsymmetricFileSteps");
+
+            using FileStream fileStream = File.Open("AsymmetricFileSteps/01_fileToEncrypt", FileMode.Open);
+
+            byte[] hash = hasher.ComputeHash(fileStream);
+
+            File.WriteAllText("AsymmetricFileSteps/04_fileHash", Convert.ToBase64String(hash));
+        }
+
+        public void SymmetricSignFile()
         {
             RSAPKCS1SignatureFormatter rsaFormatter = new(rsa);
             rsaFormatter.SetHashAlgorithm(nameof(SHA256));
@@ -207,7 +229,19 @@ namespace os_project.Services
             File.WriteAllText("SymmetricFileSteps/05_fileSignature", Convert.ToBase64String(signedHash));
         }
 
-        public bool VerifyFileSignature()
+        public void AsymmetricSignFile()
+        {
+            RSAPKCS1SignatureFormatter rsaFormatter = new(rsa);
+            rsaFormatter.SetHashAlgorithm(nameof(SHA256));
+
+            byte[] hash = Convert.FromBase64String(File.ReadAllText("AsymmetricFileSteps/04_fileHash"));
+
+            byte[] signedHash = rsaFormatter.CreateSignature(hash);
+
+            File.WriteAllText("AsymmetricFileSteps/05_fileSignature", Convert.ToBase64String(signedHash));
+        }
+
+        public bool SymmetricVerifyFileSignature()
         {
             RSAPKCS1SignatureDeformatter rsaDeformatter = new(rsa);
             rsaDeformatter.SetHashAlgorithm(nameof(SHA256));
@@ -217,6 +251,30 @@ namespace os_project.Services
                 byte[] hash = Convert.FromBase64String(File.ReadAllText("SymmetricFileSteps/04_fileHash"));
 
                 byte[] signedHash = Convert.FromBase64String(File.ReadAllText("SymmetricFileSteps/05_fileSignature"));
+
+                if(rsaDeformatter.VerifySignature(hash, signedHash))
+                {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool AsymmetricVerifyFileSignature()
+        {
+            RSAPKCS1SignatureDeformatter rsaDeformatter = new(rsa);
+            rsaDeformatter.SetHashAlgorithm(nameof(SHA256));
+
+            try
+            {
+                byte[] hash = Convert.FromBase64String(File.ReadAllText("AsymmetricFileSteps/04_fileHash"));
+
+                byte[] signedHash = Convert.FromBase64String(File.ReadAllText("AsymmetricFileSteps/05_fileSignature"));
 
                 if(rsaDeformatter.VerifySignature(hash, signedHash))
                 {

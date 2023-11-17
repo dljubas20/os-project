@@ -16,9 +16,13 @@ namespace os_project.Services
         void AsymmetricDecryptText();
         Task AsymmetricEncryptFile(IBrowserFile file);
         void AsymmetricDecryptFile();
-        void HashText();
-        void HashFile();
-        void SignFile();
-        bool VerifyFileSignature();
+        void SymmetricHashText();
+        void AsymmetricHashText();
+        void SymmetricHashFile();
+        void AsymmetricHashFile();
+        void SymmetricSignFile();
+        void AsymmetricSignFile();
+        bool SymmetricVerifyFileSignature();
+        bool AsymmetricVerifyFileSignature();
     }
 }

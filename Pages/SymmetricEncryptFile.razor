@@ -148,7 +148,7 @@
 
     private void GenerateHash()
     {
-        EncryptionRepository.HashFile();
+        EncryptionRepository.SymmetricHashFile();
 
         isGenerateHashDisabled = true;
         isSignDisabled = false;
@@ -156,7 +156,7 @@
 
     private void GenerateSignature()
     {
-        EncryptionRepository.SignFile();
+        EncryptionRepository.SymmetricSignFile();
 
         isSignDisabled = true;
         isVerifySignatureDisabled = false;
@@ -164,7 +164,7 @@
 
     private void VerifySignature()
     {
-        if (EncryptionRepository.VerifyFileSignature()) {
+        if (EncryptionRepository.SymmetricVerifyFileSignature()) {
             isVerifySignatureDisabled = true;
             isEncryptDisabled = false;
 
