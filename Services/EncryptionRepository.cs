@@ -21,26 +21,6 @@ namespace os_project.Services
             File.WriteAllText("Keys/privatni_kljuc.txt", Convert.ToBase64String(rsa.ExportRSAPrivateKey()));
         }
 
-        public byte[] GetKey()
-        {
-            return aes.Key;
-        }
-
-        public byte[] GetIV()
-        {
-            return aes.IV;
-        }
-
-        public string GetKeyString()
-        {
-            return Convert.ToBase64String(aes.Key);
-        }
-
-        public string GetIVString()
-        {
-            return Convert.ToBase64String(aes.IV);
-        }
-
         public void SymmetricEncryptText(string text)
         {
             Directory.CreateDirectory("SymmetricTextSteps");
